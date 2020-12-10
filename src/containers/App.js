@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import CardList from '../components/CardList';
 import SearchBox from '../components/SearchBox';
 import Scroll from '../components/Scroll';
 import ErrorBoundry from '../components/ErrorBoundry';
 import './App.css';
+import { setSearchField } from '../actions';
 
 function App() {
-    const [robots, setRobots] = useState([]);
-    const [searchfield, setSearchfield] = useState('');
+    const searchfield = useSelector( state => state.searchField)
+    const dispatch = useDispatch()
 
-    const onSearchChange = (event) => {
-        setSearchfield(event.target.value);
-    };
+    const [robots, setRobots] = useState([]); // ? DELETE... 
+
+    const onSearchChange = (event) => dispatch(setSearchField(event.target.value));
 
     const filteredRobots = robots.filter((robot) => {
         return robot.name
