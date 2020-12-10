@@ -1,19 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+// ---- Components
 import CardList from '../components/CardList';
 import SearchBox from '../components/SearchBox';
 import Scroll from '../components/Scroll';
 import ErrorBoundry from '../components/ErrorBoundry';
+// ----
+
+// ---- Styles
 import './App.css';
-import { setSearchField } from '../actions';
+// ----
+
+// ---- Actions
+import { requestRobots, setSearchField } from '../actions';
+// ----
 
 function App() {
-    const searchfield = useSelector( state => state.searchField)
-    const dispatch = useDispatch()
+    const searchfield = useSelector((state) => state.searchRobots.searchField);
+    const robots = useSelector((state) => state.requestRobots.robots);
+    const isPending = useSelector((state) => state.requestRobots.isPending);
+    const error = useSelector((state) => state.requestRobots.error);
 
-    const [robots, setRobots] = useState([]); // ? DELETE... 
+    const dispatch = useDispatch();
 
-    const onSearchChange = (event) => dispatch(setSearchField(event.target.value));
+    const onSearchChange = (event) =>
+        dispatch(setSearchField(event.target.value));
 
     const filteredRobots = robots.filter((robot) => {
         return robot.name
@@ -22,26 +33,27 @@ function App() {
     });
 
     useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/users')
-            .then((response) => response.json())
-            .then((users) => {
-                setRobots(users);
-            });
-    }, []);
+        const onRequestRobots = () => dispatch(requestRobots());
+        onRequestRobots();
+    }, [dispatch]);
 
-    return !robots.length ? (
-        <h1 className="tc">Loading...</h1>
-    ) : (
-        <div className="tc">
-            <h1 className="f1">ROBOFRIENDS</h1>
-            <SearchBox searchChange={onSearchChange} />
-            <Scroll>
-                <ErrorBoundry>
-                    <CardList robots={filteredRobots} />
-                </ErrorBoundry>
-            </Scroll>
-        </div>
-    );
+    if (!error) {
+        return isPending ? (
+            <h1 className="tc">Loading...</h1>
+        ) : (
+            <div className="tc">
+                <h1 className="f1">ROBOFRIENDS</h1>
+                <SearchBox searchChange={onSearchChange} />
+                <Scroll>
+                    <ErrorBoundry>
+                        <CardList robots={filteredRobots} />
+                    </ErrorBoundry>
+                </Scroll>
+            </div>
+        );
+    } else {
+        return <h1 className="tc">Ooops, something went wrong.</h1>;
+    }
 }
 
 export default App;
