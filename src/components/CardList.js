@@ -3,7 +3,7 @@ import Card from './Card'
 
 const CardList = ({robots}) => {
     return (
-        <div>
+        <div className="flex justify-center flex-wrap">
             {robots.map((user, i) => {
                 return (
                     <Card
