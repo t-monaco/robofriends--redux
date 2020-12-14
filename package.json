@@ -3,11 +3,18 @@
     "homepage": "https://t-monaco.github.io/robofriends--redux",
     "version": "0.1.0",
     "private": true,
+    "jest": {
+        "snapshotSerializers": [
+            "enzyme-to-json/serializer"
+        ]
+    },
     "dependencies": {
         "@testing-library/jest-dom": "^5.11.6",
         "@testing-library/react": "^11.2.2",
         "@testing-library/user-event": "^12.5.0",
+        "enzyme-to-json": "^3.6.1",
         "gh-pages": "^3.1.0",
+        "node-fetch": "^2.6.1",
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
         "react-redux": "^7.2.2",
@@ -55,5 +62,12 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "enzyme": "^3.11.0",
+        "enzyme-adapter-react-16": "^1.15.5",
+        "fetch-mock": "^9.11.0",
+        "nock": "^13.0.5",
+        "redux-mock-store": "^1.5.4"
     }
 }

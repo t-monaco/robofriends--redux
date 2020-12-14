@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders without crashing 1`] = `
+<div
+  className="flex justify-center flex-wrap"
+>
+  <Card
+    email="tomrider@mail.com"
+    id={1}
+    key="0"
+    name="Tom Rider"
+  />
+</div>
+`;
